@@ -11,11 +11,32 @@ const genQuestion = async (
     res: Response, 
     next: NextFunction
 ): Promise<void> => {
-    const { subject, questionCount = 10, syllabus } = req.body;
+    const { subject, questionCount = 10, syllabus, difficulty = 'medium' } = req.body;
 
-    if (!subject) {
+    // Enhanced input validation
+    if (!subject || typeof subject !== 'string' || subject.trim().length === 0) {
         res.status(400).json({
-            msg: 'subject is missing',
+            success: false,
+            message: 'Subject is required and must be a non-empty string',
+            error: 'INVALID_SUBJECT'
+        });
+        return;
+    }
+
+    if (questionCount < 1 || questionCount > 50) {
+        res.status(400).json({
+            success: false,
+            message: 'Question count must be between 1 and 50',
+            error: 'INVALID_QUESTION_COUNT'
+        });
+        return;
+    }
+
+    if (difficulty && !['easy', 'medium', 'hard'].includes(difficulty)) {
+        res.status(400).json({
+            success: false,
+            message: 'Difficulty must be one of: easy, medium, hard',
+            error: 'INVALID_DIFFICULTY'
         });
         return;
     }
@@ -40,13 +61,13 @@ Example format:
 
 Do not include any text before or after the JSON array. Ensure all JSON is properly formatted with no unterminated strings.`;
         
-        let userPrompt = `Generate ${questionCount} challenging multiple choice questions about ${subject}.`;
+        let userPrompt = `Generate ${questionCount} ${difficulty} difficulty multiple choice questions about ${subject.trim()}.`;
         
         if (syllabus) {
             userPrompt += ` Focus on these specific topics: ${syllabus}.`;
         }
         
-        userPrompt += ` Return ONLY a valid JSON array of question objects with no additional text.`;
+        userPrompt += ` Make sure questions are well-structured, clear, and appropriate for ${difficulty} level. Return ONLY a valid JSON array of question objects with no additional text.`;
 
         const response = await client.messages.create({
             model: "claude-3-5-sonnet-latest",
@@ -100,13 +121,26 @@ Do not include any text before or after the JSON array. Ensure all JSON is prope
         }
 
         res.status(200).json({
-            questions,
+            success: true,
+            message: `Successfully generated ${questions.length} questions`,
+            data: {
+                questions,
+                metadata: {
+                    subject: subject.trim(),
+                    questionCount: questions.length,
+                    difficulty,
+                    syllabus: syllabus || null,
+                    generatedAt: new Date().toISOString()
+                }
+            }
         });
     } catch (error) {
         console.error('Generation Error:', error);
         res.status(500).json({
-            msg: 'Error generating questions',
-            error: error instanceof Error ? error.message : 'Server error',
+            success: false,
+            message: 'Internal server error while generating questions',
+            error: error instanceof Error ? error.message : 'Unknown server error',
+            timestamp: new Date().toISOString()
         });
     }
 };
