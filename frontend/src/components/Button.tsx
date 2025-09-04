@@ -34,19 +34,19 @@ const Button = ({
   };
   
   const variantClasses: Record<ButtonVariant, string> = {
-    primary: 'bg-primary-600 hover:bg-primary-700 text-white',
-    secondary: 'bg-secondary-600 hover:bg-secondary-700 text-white',
-    accent: 'bg-accent-600 hover:bg-accent-700 text-white',
-    outline: 'border border-gray-300 hover:bg-gray-800 text-gray-100',
-    ghost: 'hover:bg-gray-800 text-gray-300 hover:text-white',
+    primary: 'bg-primary-600 hover:bg-primary-700 text-white shadow-lg hover:shadow-primary-500/25',
+    secondary: 'bg-secondary-600 hover:bg-secondary-700 text-white shadow-lg hover:shadow-secondary-500/25',
+    accent: 'bg-accent-600 hover:bg-accent-700 text-white shadow-lg hover:shadow-accent-500/25',
+    outline: 'border border-gray-300 hover:bg-gray-800 text-gray-100 shadow-md hover:shadow-gray-500/20',
+    ghost: 'hover:bg-gray-800 text-gray-300 hover:text-white shadow-sm hover:shadow-gray-500/10',
   };
   
   return (
     <motion.button
       whileTap={{ scale: 0.97 }}
       className={`
-        rounded-md font-medium transition-colors duration-200 
-        flex items-center justify-center gap-2
+        rounded-lg font-medium transition-all duration-300 ease-in-out
+        flex items-center justify-center gap-2 transform
         ${sizeClasses[size]} 
         ${variantClasses[variant]}
         ${className}
