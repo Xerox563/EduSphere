@@ -14,20 +14,20 @@ const Navbar = (): JSX.Element => {
   };
 
   return (
-    <header className="bg-background-dark border-b border-gray-800 sticky top-0 z-50">
+    <header className="bg-background-dark/95 backdrop-blur-md border-b border-gray-700/50 sticky top-0 z-50 shadow-lg">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2">
-            <img src="https://i.imgur.com/iNGXZD0.png" alt="" className='h-[30px]' />
-            <span className="text-xl font-bold text-white">Merntix</span>
+          <Link to="/" className="flex items-center gap-2 hover:scale-105 transition-transform duration-200">
+            <img src="https://i.imgur.com/iNGXZD0.png" alt="" className='h-[30px] drop-shadow-lg' />
+            <span className="text-xl font-bold text-white bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">Merntix</span>
           </Link>
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className={`${isActive('/')} transition-colors duration-200`}>
+            <Link to="/" className={`${isActive('/')} transition-all duration-300 hover:scale-105 px-3 py-1 rounded-md`}>
               Home
             </Link>
-            <Link to="/test" className={`${isActive('/test')} transition-colors duration-200`}>
+            <Link to="/test" className={`${isActive('/test')} transition-all duration-300 hover:scale-105 px-3 py-1 rounded-md`}>
               Test
             </Link>
           </nav>
