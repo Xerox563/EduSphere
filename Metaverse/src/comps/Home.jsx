@@ -49,16 +49,22 @@ function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100 flex flex-col items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-center text-indigo-700 mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(120,119,198,0.3),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,119,198,0.3),transparent_50%)]" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      
+      <div className="max-w-md w-full bg-white/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-8 relative z-10">
+        <h1 className="text-4xl font-bold text-center bg-gradient-to-r from-white to-indigo-200 bg-clip-text text-transparent mb-8">
           Virtual Classroom
         </h1>
         
         <div className="space-y-6">
           {/* Name Input */}
           <div className="space-y-2">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-white/90">
               Your Name
             </label>
             <input
@@ -67,14 +73,14 @@ function Home() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 outline-none transition-all duration-300 text-white placeholder-white/60 backdrop-blur-sm"
               required
             />
           </div>
           
           {/* Character Selection */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-white/90">
               Choose Character
             </label>
             <div className="grid grid-cols-3 gap-3">
@@ -82,18 +88,18 @@ function Home() {
                 <div
                   key={character.id}
                   onClick={() => setSelectedCharacter(character.id)}
-                  className={`cursor-pointer border rounded-lg p-2 flex flex-col items-center justify-center transition ${
+                  className={`cursor-pointer border rounded-xl p-3 flex flex-col items-center justify-center transition-all duration-300 transform hover:scale-105 ${
                     selectedCharacter === character.id
-                      ? 'border-indigo-500 bg-indigo-50 ring-2 ring-indigo-500'
-                      : 'border-gray-200 hover:border-indigo-300'
+                      ? 'border-indigo-400 bg-indigo-500/30 ring-2 ring-indigo-400 shadow-lg shadow-indigo-500/25'
+                      : 'border-white/30 hover:border-indigo-300 hover:bg-white/10'
                   }`}
                 >
                   <img
                     src={character.image}
                     alt={character.name}
-                    className="w-16 h-16 rounded-full mb-2"
+                    className="w-16 h-16 rounded-full mb-2 border-2 border-white/20"
                   />
-                  <span className="text-sm font-medium">{character.name}</span>
+                  <span className="text-sm font-medium text-white">{character.name}</span>
                 </div>
               ))}
             </div>
@@ -101,17 +107,17 @@ function Home() {
           
           <button 
             onClick={handleCreateRoom} 
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-medium transition duration-200 shadow-md"
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-indigo-500/25 transform hover:scale-105"
           >
             Create Room
           </button>
           
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
+              <div className="w-full border-t border-white/30"></div>
             </div>
-            <div className="relative flex justify-center text-gray-500">
-              <span className="bg-white px-3 text-sm">or join existing</span>
+            <div className="relative flex justify-center text-white/70">
+              <span className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 px-3 text-sm">or join existing</span>
             </div>
           </div>
           
@@ -121,12 +127,12 @@ function Home() {
               value={joinCode}
               onChange={(e) => setJoinCode(e.target.value)}
               placeholder="Enter Room Code"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+              className="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 outline-none transition-all duration-300 text-white placeholder-white/60 backdrop-blur-sm"
               required
             />
             <button 
               type="submit" 
-              className="w-full bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-800 py-3 rounded-lg font-medium transition duration-200"
+              className="w-full bg-white/20 hover:bg-white/30 border border-white/30 text-white py-3 rounded-xl font-medium transition-all duration-300 backdrop-blur-sm hover:scale-105"
             >
               Join Room
             </button>
@@ -134,7 +140,7 @@ function Home() {
         </div>
       </div>
       
-      <p className="mt-6 text-sm text-gray-500">
+      <p className="mt-6 text-sm text-white/70 relative z-10">
         Connect with your classroom virtually, anywhere.
       </p>
     </div>
