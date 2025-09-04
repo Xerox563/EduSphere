@@ -63,4 +63,6 @@ node server.js
 
 ## Technologies Used -
 
-**Frontend**: React, TypeScript, Tailwind CSS, Vite - **Backend**: Node.js, Express, TypeScript - **Metaverse**: React, Three.js, React Three Fiber ,WebSockets optimise the content of this also , means its should not look copywright and concise also
+**Frontend**: React, TypeScript, Tailwind CSS, Vite -
+**Backend**: Node.js, Express, TypeScript -
+**Metaverse**: React, Three.js, React Three Fiber ,WebSockets
