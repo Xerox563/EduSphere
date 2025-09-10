@@ -7,15 +7,26 @@ import questionRoute from './routes/question.route'
 config()
 
 const app = express()
+app.set('trust proxy', 1)
 
 // middleware
 app.use(cors({
     origin: CORS_ORIGIN,
     credentials: true
 }))
-app.use(express.json())
+app.use(express.json({ limit: '1mb' }))
 app.use(helmet())
 app.use(express.urlencoded({ extended: true }));
+
+// simple request logger with timing
+app.use((req, res, next) => {
+    const startedAt = Date.now()
+    res.on('finish', () => {
+        const durationMs = Date.now() - startedAt
+        console.log(`${req.method} ${req.originalUrl} -> ${res.statusCode} (${durationMs}ms)`) 
+    })
+    next()
+})
 
 
 // routes
